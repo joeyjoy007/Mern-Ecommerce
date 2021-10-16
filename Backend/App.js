@@ -1,13 +1,13 @@
 const express = require('express')
 
-
+const router = require('./routes/productRoutes.js');
 const app = express()
 
 app.use(express.json())
 
-const products = require('./routes/productRoutes.js');
+const product = router;
 
-app.use('/api/v1',products)
+app.use('/api/v1',product)
 
 
 
