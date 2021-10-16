@@ -15,3 +15,26 @@ exports.getAllProducts = async (req,res)=>{
     res.status(200).json({message:"Route is Working",products})
     
 }
+
+exports.updateProduct = async (req,res,next)=>{
+    let products = await Product.findById(req.params.id)
+    if(!products){
+       return  res.statud(500).json({
+            failed:"Item not found",
+            success:false,
+        })
+    }
+
+    products = await Product.findByIdAndUpdate(req.params.id,req.body,{
+        new:true,
+        runValidators:true,
+        
+    });
+    res.json({
+        success:true,
+        message:"Item Updated",
+        products
+    })
+
+
+}

@@ -8,7 +8,7 @@ app.use(express.json())
 const product = router;
 
 app.use('/api/v1',product)
-app.use('/api/v1',product)
+
 
 
 
