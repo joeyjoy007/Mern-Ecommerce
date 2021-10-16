@@ -38,3 +38,24 @@ exports.updateProduct = async (req,res,next)=>{
 
 
 }
+
+
+
+exports.deleteProduct = async (req,res,next)=>{
+    let products = await Product.findById(req.params.id)
+    if(!products){
+       return  res.statud(500).json({
+            failed:"Item not found",
+            success:false,
+        })
+    }
+
+    products = await Product.findByIdAndDelete(req.params.id);
+    res.json({
+        success:true,
+        message:"Item Deleted",
+        products
+    })
+
+
+}
