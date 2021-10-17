@@ -6,9 +6,9 @@ const ErrorHandler = require('../errorHandler/errorHandle')
     err.message = err.message || "Internal server error"
 
     res.status(err.statusCode).json({
-        message:"Failed to catch bhai",
+        message:"Failed to catch ",
         success:false,
-        error:err
+        error:err.message
     })
 }
 

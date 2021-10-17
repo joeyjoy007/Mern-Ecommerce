@@ -6,6 +6,18 @@ const connection = require('./Database/Conn')
 
 connection()
 
-app.listen(port,()=>{
+const server = app.listen(port,()=>{
     console.log(`server is running on http://localhost:${port}`);
 })
+
+//Unhandeled promise rejection
+
+process.on('unhandledRejection',(err)=>{
+    console.log(`Error : ${err.message}`)
+    console.log("Shutting Servers Down");
+
+    server.close(()=>{
+        process.exit(1);
+    })
+})
+ 
