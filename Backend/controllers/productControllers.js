@@ -1,7 +1,8 @@
 const Product = require('../modals/productModal')
+
 const catchErr = require('../Middelware/asyncMiddelware');
 const ErrorHandler = require('../errorHandler/errorHandle');
-
+const AppFeature = require('../Search/Search')
 exports.addProduct = catchErr(async (req,res)=>{
 
     const addProduct = await Product.create(req.body);
@@ -11,7 +12,9 @@ exports.addProduct = catchErr(async (req,res)=>{
 
 
 exports.getAllProducts = catchErr(async (req,res)=>{
-    const products = await Product.find()
+
+    const appfeature = new AppFeature(Product.find(),req.query).search()
+    const products = await appfeature.query
 
     res.status(200).json({message:"Route is Working",products})
     
@@ -65,6 +68,9 @@ exports.deleteProduct = catchErr(async (req,res,next)=>{
 
 
 exports.getProductDetail =catchErr( async (req,res,next)=>{
+
+
+
     let products = await Product.findById(req.params.id)
     if(!products){
      return next(new ErrorHandler("Product not found",404))
