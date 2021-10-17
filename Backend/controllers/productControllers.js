@@ -13,7 +13,7 @@ exports.addProduct = catchErr(async (req,res)=>{
 
 exports.getAllProducts = catchErr(async (req,res)=>{
 
-    const appfeature = new AppFeature(Product.find(),req.query).search()
+    const appfeature = new AppFeature(Product.find(),req.query).search().filter()
     const products = await appfeature.query
 
     res.status(200).json({message:"Route is Working",products})
