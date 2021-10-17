@@ -1,22 +1,23 @@
 const Product = require('../modals/productModal')
+const catchErr = require('../Middelware/asyncMiddelware');
+const ErrorHandler = require('../errorHandler/errorHandle');
+
+exports.addProduct = catchErr(async (req,res)=>{
+
+    const addProduct = await Product.create(req.body);
+    
+        res.status(201).json({success:true,addProduct})
+    })
 
 
-exports.addProduct = async (req,res)=>{
-
-const addProduct = await Product.create(req.body);
-
-    res.status(201).json({success:true,addProduct})
-}
-
-
-exports.getAllProducts = async (req,res)=>{
+exports.getAllProducts = catchErr(async (req,res)=>{
     const products = await Product.find()
 
     res.status(200).json({message:"Route is Working",products})
     
-}
+})
 
-exports.updateProduct = async (req,res,next)=>{
+exports.updateProduct =catchErr( async (req,res,next)=>{
     let products = await Product.findById(req.params.id)
     if(!products){
        return  res.statud(500).json({
@@ -37,14 +38,15 @@ exports.updateProduct = async (req,res,next)=>{
     })
 
 
-}
+})
 
 
 
-exports.deleteProduct = async (req,res,next)=>{
+exports.deleteProduct = catchErr(async (req,res,next)=>{
     let products = await Product.findById(req.params.id)
+
     if(!products){
-       return  res.statud(500).json({
+       return  res.status(500).json({
             failed:"Item not found",
             success:false,
         })
@@ -58,4 +60,21 @@ exports.deleteProduct = async (req,res,next)=>{
     })
 
 
-}
+
+})
+
+
+exports.getProductDetail =catchErr( async (req,res,next)=>{
+    let products = await Product.findById(req.params.id)
+    if(!products){
+     return next(new ErrorHandler("Product not found",404))
+    }
+
+    res.status(200).json({
+        success:true,
+        
+        products
+    })
+
+
+})
