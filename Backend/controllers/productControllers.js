@@ -12,8 +12,8 @@ exports.addProduct = catchErr(async (req,res)=>{
 
 
 exports.getAllProducts = catchErr(async (req,res)=>{
-
-    const appfeature = new AppFeature(Product.find(),req.query).search().filter()
+const resultPerPage = 5;
+    const appfeature = new AppFeature(Product.find(),req.query).search().filter().pagination(resultPerPage)
     const products = await appfeature.query
 
     res.status(200).json({message:"Route is Working",products})

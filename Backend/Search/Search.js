@@ -24,22 +24,34 @@ class AppFeature {
     filter() {
         const queryCopy = { ...this.queryStr }
         const removeFields = ["keyword", "page", "limit"]
-      
-        removeFields.forEach((key) => 
+
+        removeFields.forEach((key) =>
             delete queryCopy[key]
-            
+
         )
-    
-let queryStr = JSON.stringify(queryCopy)
-queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g,(key)=>`$${key}`)
-            console.log(queryStr);
-       
+
+        let queryStr = JSON.stringify(queryCopy)
+        queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`)
+        console.log(queryStr);
+
+        
+
         this.query = this.query.find(JSON.parse(queryStr))
         return this
     }
 
 
-  
- 
+    pagination(resultPerPage){
+            const currentPage = Number(this.queryStr.page) || 1; //10 : 5
+
+            const skip = resultPerPage * (currentPage - 1)
+
+            this.query = this.query.limit(resultPerPage).skip(skip);
+
+            return this;
+    }
+
+
+
 
 } module.exports = AppFeature
