@@ -1,7 +1,7 @@
 const CatchErr = require('../Middelware/asyncMiddelware')
 const User = require('../modals/UserModel')
 const ErrorHandler = require('../Utils/errorHandler/errorHandle')
-
+const sendCookie = require('../Utils/jwtCookie/UserCookie')
 
 exports.registerUser = CatchErr(async(req,res,next)=>{
     const {name,email,password} = req.body
@@ -13,15 +13,8 @@ exports.registerUser = CatchErr(async(req,res,next)=>{
             url:"url"
         }
     })
-    const token = user.generateToken()
-   
-
-    res.status(200).json({
-            success:true,
-            message:"User Registered",
-          token
-           
-    })
+    
+    sendCookie(user,201,res) // function in utils
 })
 
 
@@ -46,13 +39,8 @@ exports.loginUser = CatchErr(async(req,res,next)=>{
        
         return next(new ErrorHandler("Credential invalid",401))
     }
-    const token = user.generateToken()
-   
 
-    res.status(200).json({
-            success:true,
-            message:"User Logined",
-          token
-    });
+
+    sendCookie(user,201,res) // function inutils
 })
 
