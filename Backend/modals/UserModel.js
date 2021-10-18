@@ -46,27 +46,38 @@ const userSchema = new mongoose.Schema({
 })
 
 
+
 //JwT
 
 
 
 userSchema.methods.generateToken = function(){
-    
+  
    const token =  jwt.sign({id:this._id},process.env.SECRET_CODE,{
        expiresIn:process.env.EXPIRY
    })
    return token
     
 }
+
+
+
+userSchema.methods.comparePassword = async function(password){
+    console.log("4rth");
+    const match = await bcrypt.compare(password,this.password);
+console.log("5th");
+    return match;
+
+    
+}
+
+
 // bcrypt
 userSchema.pre("save",async function(next){
 if(!this.isModified("password")){
     next()
 
 }
-
-
-
 
 
     this.password = await bcrypt.hash(this.password,10)
