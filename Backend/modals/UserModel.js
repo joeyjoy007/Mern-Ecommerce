@@ -63,9 +63,9 @@ userSchema.methods.generateToken = function(){
 
 
 userSchema.methods.comparePassword = async function(password){
-    console.log("4rth");
+
     const match = await bcrypt.compare(password,this.password);
-console.log("5th");
+
     return match;
 
     
