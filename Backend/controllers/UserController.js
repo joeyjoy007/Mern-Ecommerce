@@ -1,5 +1,7 @@
 const CatchErr = require('../Middelware/asyncMiddelware')
 const User = require('../modals/UserModel')
+
+
 exports.registerUser = CatchErr(async(req,res,next)=>{
     const {name,email,password} = req.body
 
@@ -10,11 +12,14 @@ exports.registerUser = CatchErr(async(req,res,next)=>{
             url:"url"
         }
     })
+    const token = user.generateToken()
    
 
     res.status(201).json({
             success:true,
             message:"User Registered",
-            user
+          token
+           
     })
 })
+
