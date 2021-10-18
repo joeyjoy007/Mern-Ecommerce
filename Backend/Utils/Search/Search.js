@@ -48,7 +48,7 @@ class AppFeature {
 
             this.query = this.query.limit(resultPerPage).skip(skip);
 
-            return this;
+            return this; 
     }
 
 
