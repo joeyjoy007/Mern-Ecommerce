@@ -1,8 +1,8 @@
 const Product = require('../modals/productModal')
 
 const catchErr = require('../Middelware/asyncMiddelware');
-const ErrorHandler = require('../errorHandler/errorHandle');
-const AppFeature = require('../Search/Search')
+const ErrorHandler = require('../Utils/errorHandler/errorHandle');
+const AppFeature = require('../Utils/Search/Search')
 exports.addProduct = catchErr(async (req,res)=>{
 
     const addProduct = await Product.create(req.body);
@@ -25,10 +25,10 @@ const countProduct = await Product.countDocuments();
 exports.updateProduct =catchErr( async (req,res,next)=>{
     let products = await Product.findById(req.params.id)
     if(!products){
-       return  res.statud(500).json({
+       return  res.status(500).json({
             failed:"Item not found",
             success:false,
-            countProduct()
+         
         })
     }
 
