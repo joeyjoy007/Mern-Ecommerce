@@ -12,7 +12,9 @@ exports.addProduct = catchErr(async (req,res)=>{
 
 
 exports.getAllProducts = catchErr(async (req,res)=>{
+
 const resultPerPage = 5;
+const countProduct = await Product.countDocuments();
     const appfeature = new AppFeature(Product.find(),req.query).search().filter().pagination(resultPerPage)
     const products = await appfeature.query
 
@@ -26,6 +28,7 @@ exports.updateProduct =catchErr( async (req,res,next)=>{
        return  res.statud(500).json({
             failed:"Item not found",
             success:false,
+            countProduct()
         })
     }
 
