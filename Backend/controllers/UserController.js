@@ -44,3 +44,14 @@ exports.loginUser = CatchErr(async(req,res,next)=>{
     sendCookie(user,201,res) // function inutils
 })
 
+
+
+
+exports.logoutUser = CatchErr(async(req,res,next)=>{
+    res.clearCookie('jwtToken')
+
+    res.status(200).json({
+        success:true,
+        message:"User has been logged out"
+    })
+})
