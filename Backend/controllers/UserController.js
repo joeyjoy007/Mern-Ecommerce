@@ -173,3 +173,24 @@ exports.resetPassword = async(req,res,next)=>{
 
 
 }
+
+
+exports.getUserDetail = CatchErr(async(req,res,next)=>{
+    const user = await User.findById(req.user.id)
+console.log(1);
+    if(user){
+        console.log(2);
+     return    res.status(200).json({
+            success:true,
+            message:"User detail is",
+            user,
+        })
+      
+    }
+    console.log(3);
+    return res.status(401).json({
+        succes:false,
+        message:"User is not available"
+    })
+  
+})
