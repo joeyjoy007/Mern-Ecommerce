@@ -61,10 +61,11 @@ exports.logoutUser = CatchErr(async(req,res,next)=>{
 })
 
 exports.forgotPassword = CatchErr(async(req,res,next)=>{
-
+console.log("1nn");
     const user = await User.findOne({email:req.body.email})
 
     if(!user){
+        console.log("1n");
         return next(new ErrorHandler("account not exist",500))
     }
 
@@ -72,7 +73,7 @@ exports.forgotPassword = CatchErr(async(req,res,next)=>{
 
     const resetPassword = user.getResetPasswordtoken()
 
-    await user.save()
+    await user.save({validateBeforeSave:false})
 
     const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset?${resetPassword}`
 
@@ -82,6 +83,7 @@ exports.forgotPassword = CatchErr(async(req,res,next)=>{
 
 
             await sendEmail({
+            
                 email:user.email,
                 subject:"Password Recovery",
                 message
@@ -95,10 +97,11 @@ exports.forgotPassword = CatchErr(async(req,res,next)=>{
 
         
     } catch (error) {
+        console.log("2n");
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
-       await user.save()
-    return next(new ErrorHandler("error occured",404))
+       await user.save({validateBeforeSave:false})
+    return next(new ErrorHandler("error occured",401))
     }
     
 })
