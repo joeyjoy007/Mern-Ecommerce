@@ -2,6 +2,7 @@ const CatchErr = require('../Middelware/asyncMiddelware')
 const User = require('../modals/UserModel')
 const ErrorHandler = require('../Utils/errorHandler/errorHandle')
 const sendCookie = require('../Utils/jwtCookie/UserCookie')
+const sendEmail = require('../Utils/email/email')
 
 exports.registerUser = CatchErr(async(req,res,next)=>{
 
@@ -57,4 +58,47 @@ exports.logoutUser = CatchErr(async(req,res,next)=>{
         success:true,
         message:"User has been logged out"
     })
+})
+
+exports.forgotPassword = CatchErr(async(req,res,next)=>{
+
+    const user = await User.findOne({email:req.body.email})
+
+    if(!user){
+        return next(new ErrorHandler("account not exist",500))
+    }
+
+    //Get Reset Password Token
+
+    const resetPassword = user.getResetPasswordtoken()
+
+    await user.save()
+
+    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset?${resetPassword}`
+
+    const message = `Password Recovery link \n\n ${resetPasswordUrl} if u not requested it then ignore it`;
+
+    try {
+
+
+            await sendEmail({
+                email:user.email,
+                subject:"Password Recovery",
+                message
+            });
+
+            res.send(200).json({
+                success:true,
+
+                message:"Email sent successfully"
+            })
+
+        
+    } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+       await user.save()
+    return next(new ErrorHandler("error occured",404))
+    }
+    
 })
