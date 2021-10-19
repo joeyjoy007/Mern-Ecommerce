@@ -19,7 +19,7 @@ console.log("4n")
           from:process.env.SMPT_MAIL,
           to:options.email,
           subject:options.subject,
-          message:options.message
+         text:options.message
       })
 console.log("5n");
       await transporter.sendMail(mailOptions)

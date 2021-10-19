@@ -91,7 +91,7 @@ console.log("3nn");
             
                 email:user.email,
                 subject:"Password Recovery",
-                message
+                message:message
             });
 console.log("7n");
             res.status(200).json({
