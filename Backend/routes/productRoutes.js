@@ -4,10 +4,10 @@ const {authToken , authorizedRoles} = require('../Middelware/userAuthentication'
 
 const router = express.Router()
 
-router.route("/products").get(authToken,authorizedRoles("admin"),getAllProducts)
-router.route("/newProduct").post(authToken,addProduct)
-router.route("/updateProduct/:id").put(authToken,updateProduct)
-router.route("/deleteProduct/:id").delete(authToken,deleteProduct)
+router.route("/products").get(getAllProducts)
+router.route("/newProduct").post(authToken,authorizedRoles("admin"),addProduct)
+router.route("/updateProduct/:id").put(authToken,authorizedRoles("admin"),updateProduct)
+router.route("/deleteProduct/:id").delete(authToken,authorizedRoles("admin"),deleteProduct)
 router.route("/getProductDetail/:id").get(getProductDetail)
     
 

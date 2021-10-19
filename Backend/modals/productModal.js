@@ -55,6 +55,11 @@ const productSchema = new mongoose.Schema({
             type:String,
             required:true
         },
+        user:{
+            type:mongoose.Schema.objectId,
+            ref:"User",
+            required:true
+        }
 
     }],
     createdAt :{

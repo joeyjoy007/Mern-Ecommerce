@@ -5,6 +5,8 @@ const ErrorHandler = require('../Utils/errorHandler/errorHandle');
 const AppFeature = require('../Utils/Search/Search')
 exports.addProduct = catchErr(async (req,res)=>{
 
+    req.body.user = req.user.id ;
+
     const addProduct = await Product.create(req.body);
     
         res.status(201).json({success:true,addProduct})

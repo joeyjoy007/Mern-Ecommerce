@@ -27,7 +27,7 @@ exports.authorizedRoles = (...roles)=>{
     return (req,res,next)=>{
         if(!roles.includes(req.user.role)){
 
-           next(new ErrorHandler(`role:${req.user.role} is not allowed`))
+       return    next(new ErrorHandler(`role:${req.user.role} is not allowed`,403))
         }
         next();
     }
