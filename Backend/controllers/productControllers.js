@@ -87,3 +87,4 @@ exports.getProductDetail =catchErr( async (req,res,next)=>{
 
 
 })
+

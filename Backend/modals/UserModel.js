@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
         maxlength:[30,"you can enter more than 30 characters"],
         minlength:[4,"you cant enter less than 4 character"]
     },
+    
     email:{
         type:String,
         required:true,

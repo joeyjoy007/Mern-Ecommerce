@@ -3,7 +3,7 @@ const ErrorHandler = require('../Utils/errorHandler/errorHandle');
 const User = require('../modals/UserModel')
 const jwt = require('jsonwebtoken')
 
-const authToken =  catchError(async(req,res,next)=>{
+exports.authToken =  catchError(async(req,res,next)=>{
  console.log(1);
     const token = req.cookies.jwtToken;
   
@@ -22,4 +22,13 @@ const authToken =  catchError(async(req,res,next)=>{
         next()
 
 })
-module.exports = authToken
+
+exports.authorizedRoles = (...roles)=>{
+    return (req,res,next)=>{
+        if(!roles.includes(req.user.role)){
+
+           next(new ErrorHandler(`role:${req.user.role} is not allowed`))
+        }
+        next();
+    }
+}
