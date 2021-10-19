@@ -4,6 +4,9 @@ const ErrorHandler = require('../Utils/errorHandler/errorHandle')
 const sendCookie = require('../Utils/jwtCookie/UserCookie')
 
 exports.registerUser = CatchErr(async(req,res,next)=>{
+
+    
+
     const {name,email,password} = req.body
 
 
