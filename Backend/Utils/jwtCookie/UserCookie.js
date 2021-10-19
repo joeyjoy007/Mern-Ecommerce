@@ -9,7 +9,7 @@ const sendCookie = (user, statusCode, res) => {
 
     res.status(statusCode).cookie('jwtToken', jwtToken).json({
         success: true,
-        message: "User Logined",
+        message: "User Logined hai",
         jwtToken
     });
 }

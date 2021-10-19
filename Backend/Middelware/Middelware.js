@@ -8,7 +8,7 @@ const ErrorHandler = require('../Utils/errorHandler/errorHandle')
     res.status(err.statusCode).json({
         message:"Failed to catch ",
         success:false,
-        error:err.message
+        error:err
     })
 }
 

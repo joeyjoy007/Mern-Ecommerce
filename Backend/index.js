@@ -12,12 +12,12 @@ const server = app.listen(port,()=>{
 
 //Unhandeled promise rejection
 
-process.on('unhandledRejection',(err)=>{
-    console.log(`Error : ${err.message}`)
-    console.log("Shutting Servers Down");
+// process.on('unhandledRejection',(err)=>{
+//     console.log(`Error : ${err.message}`)
+//     console.log("Shutting Servers Down");
 
-    server.close(()=>{
-        process.exit(1);
-    })
-})
+//     server.close(()=>{
+//         process.exit(1);
+//     })
+// })
  

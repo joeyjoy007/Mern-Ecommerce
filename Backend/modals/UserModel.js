@@ -68,7 +68,15 @@ userSchema.methods.comparePassword = async function(password){
 
     const match = await bcrypt.compare(password,this.password);
 
-    return match;
+    if(!match){
+        console.log("Not matched");
+        
+    }
+
+    else{
+        console.log("ghotalka");
+        return match
+    }
 
     
 }

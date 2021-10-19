@@ -6,12 +6,13 @@ const AppFeature = require('../Utils/Search/Search')
 
 
 exports.addProduct = catchErr(async (req,res)=>{
-
-    // req.body.user = req.user.id ;
-
+console.log(9);
+    req.body.user = req.user.id ;
+    console.log(9);
     const addProduct = await Product.create(req.body);
-    
+    console.log(9);
         res.status(201).json({success:true,addProduct})
+        console.log(9);
     })
 
 

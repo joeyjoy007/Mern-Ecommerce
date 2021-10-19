@@ -27,24 +27,35 @@ exports.loginUser = CatchErr(async(req,res,next)=>{
     const {email,password} = req.body
 
     if(!email || !password){
-       return  next(new ErrorHandler("Please enter email or password",401))
+       res.status(401).json({
+           success:false,
+           message:"invalid cedentials1"
+       })
      
     }
 
     const user = await User.findOne({email}).select("+password")
 
     if(!user){
-     
-        return next(new ErrorHandler("Invalid email or password",401))
+     console.log("Not user");
+        res.status(401).json({
+            success:false,
+            message:"invalid cedentials 2"
+        })
+      
     }
 
-    const matchPassword = user.comparePassword(password);
+    const matchPassword =await user.comparePassword(password);
 
     if(!matchPassword){
+        console.log("not match")
        
-        return next(new ErrorHandler("Credential invalid",401))
+     return   res.status(401).json({
+            success:false,
+            message:"password not compared"
+        })
     }
-
+   console.log("Ghotala2");
 
     sendCookie(user,201,res) // function inutils
 })
@@ -127,7 +138,10 @@ exports.resetPassword = async(req,res,next)=>{
     
         if(!user){
             console.log(2);
-            return next(new ErrorHandler("tokn is invalid or expired",400))
+            res.status(400).json({
+                success:false,
+                message:"user not found"
+            })
         }
     
         if(req.body.password !== req.body.cPassword){
@@ -144,7 +158,8 @@ exports.resetPassword = async(req,res,next)=>{
         user.resetPasswordExpire = undefined;
         console.log(5);
     
-        await user.save()
+        await user.save();
+        sendCookie(user,200,res)
         console.log(6);
         
     } catch (error) {

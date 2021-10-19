@@ -8,15 +8,19 @@ exports.authToken =  catchError(async(req,res,next)=>{
     const token = req.cookies.jwtToken;
   
         if(!token){
-          console.log(2);
-            next(new ErrorHandler("User not allowed",401))
+            console.log("not token");
+    
+            res.status(401).json({
+                success:false,
+                message:"token not provided"
+            })
         }
-console.log(3);
+
         const decode = jwt.verify(token,process.env.SECRET_CODE)
-     console.log(4);
+
 
         const user = await User.findById(decode.id)
-   console.log(5);
+
   
         req.user = user;
         next()
@@ -26,12 +30,18 @@ console.log(3);
 exports.authorizedRoles = (...roles)=>{
     return (req,res,next)=>{
         console.log(6);
-        if(roles.includes(req.user.role)){
+        console.log(req.user.role);
+        if(!roles.includes(req.user.role)){
+
             console.log(7);
 
-       return    next(new ErrorHandler(`role:${req.user.role} is not allowed`,403))
+       return   res.status(401).json({
+        success:false,
+        message:"role not decided"
+    })
         }
         console.log(8);
         next();
+     
     }
 }
