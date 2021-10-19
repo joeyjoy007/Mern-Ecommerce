@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer')
 
 
 const sendEmail = async(options)=>{
-console.log("3n");
+
     let transporter = nodemailer.createTransport({
       host:"smtp.gmail.com",
       port:465,
@@ -13,7 +13,7 @@ console.log("3n");
           pass:process.env.SMPT_PASSWORd,
         },
       });
-console.log("4n")
+
 
       const mailOptions = ({
           from:process.env.SMPT_MAIL,
@@ -21,9 +21,9 @@ console.log("4n")
           subject:options.subject,
          text:options.message
       })
-console.log("5n");
+
       await transporter.sendMail(mailOptions)
-      console.log("6n");
+
 }
 
 
