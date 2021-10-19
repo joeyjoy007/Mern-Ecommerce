@@ -2,7 +2,7 @@ const CatchErr = require('../Middelware/asyncMiddelware')
 const User = require('../modals/UserModel')
 const ErrorHandler = require('../Utils/errorHandler/errorHandle')
 const sendCookie = require('../Utils/jwtCookie/UserCookie')
-const sendEmail = require('../Utils/email/email')
+const sendEmail = require('../Utils/nodemailer/nodemailer')
 
 exports.registerUser = CatchErr(async(req,res,next)=>{
 
@@ -63,6 +63,7 @@ exports.logoutUser = CatchErr(async(req,res,next)=>{
 exports.forgotPassword = CatchErr(async(req,res,next)=>{
 console.log("1nn");
     const user = await User.findOne({email:req.body.email})
+    console.log("2nn");
 
     if(!user){
         console.log("1n");
@@ -70,16 +71,20 @@ console.log("1nn");
     }
 
     //Get Reset Password Token
-
-    const resetPassword = user.getResetPasswordtoken()
+console.log("3nn");
+    const resetPassword = user.getResetPasswordToken()
+    console.log("4nn")
 
     await user.save({validateBeforeSave:false})
 
     const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset?${resetPassword}`
 
     const message = `Password Recovery link \n\n ${resetPasswordUrl} if u not requested it then ignore it`;
+    console.log("5n");
 
     try {
+
+        console.log("6n");
 
 
             await sendEmail({
@@ -88,8 +93,8 @@ console.log("1nn");
                 subject:"Password Recovery",
                 message
             });
-
-            res.send(200).json({
+console.log("7n");
+            res.status(200).json({
                 success:true,
 
                 message:"Email sent successfully"
@@ -100,8 +105,11 @@ console.log("1nn");
         console.log("2n");
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
+        console.log(3n);
        await user.save({validateBeforeSave:false})
+       console.log(4n);
     return next(new ErrorHandler("error occured",401))
+  
     }
     
 })
