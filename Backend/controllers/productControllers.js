@@ -123,17 +123,21 @@ product.reviews.forEach(element=>{
             product.reviews.push(review)
             product.noOfReviews = product.reviews.length
     }
-let avg = 0;
-console.log(56);
-product.rating = product.reviews.forEach((element)=>{
-    console.log(57);
-    avg += element.rating
-    console.log(58);
-}) / product.reviews.length
-console.log(59);
+
+
+
+var avg = 0;
+
+product.reviews.forEach((element)=>{
+   
+    avg = avg + element.rating
+   
+})
+
+product.rating =  avg / product.reviews.length
 
 await product.save()
-console.log(60);
+;
 
 res.status(200).json({
     success:true,
