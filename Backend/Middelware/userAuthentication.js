@@ -1,7 +1,8 @@
 const catchError = require('../Middelware/asyncMiddelware');
 const ErrorHandler = require('../Utils/errorHandler/errorHandle');
 const User = require('../modals/UserModel')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const sendCookie = require('../Utils/jwtCookie/UserCookie');
 
 exports.authToken =  catchError(async(req,res,next)=>{
  console.log(1);
@@ -46,3 +47,20 @@ exports.authorizedRoles = (...roles)=>{
      
     }
 }
+
+
+exports.updateProfile = catchError(async(req,res,next)=>{
+    const updation = {
+        name:req.body.name,
+        email:req.body.email
+    }
+
+    const user = await User.findByIdAndUpdate(req.user.id,updation,{
+        new:true,
+        runValidators:true,
+        userFindAndModift:false
+        
+    })
+
+    sendCookie(user,200,res)
+})
