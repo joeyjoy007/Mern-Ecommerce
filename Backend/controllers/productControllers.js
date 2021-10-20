@@ -145,3 +145,67 @@ res.status(200).json({
 })
 
 })
+
+
+exports.getTotalReviews = catchErr(async(req,res,next)=>{
+    const product = await Product.findById(req.query.id)
+
+    if(! product){
+      
+        res.status(404).json({
+            success:false,
+            message:"review not foundd"
+        })
+    }
+   
+    res.status(200).json({
+       
+        success:true,
+        message:"review found",
+       reviews: product.reviews
+    })
+
+
+})
+
+exports.deleteReview = catchErr(async(req,res,next)=>{
+    console.log(1);
+    const product = await Product.findById(req.query.productId)
+
+    if(!product){
+        console.log(2);
+        res.status(401).json({
+            success:false,
+            message:"product not found"
+        })
+    }
+console.log(3);
+    const reviews = product.reviews.filter(element=>element._id.toString() !== req.query.id.toString())
+    console.log(4);
+
+    var avg = 0;
+
+reviews.forEach((element)=>{
+   
+    avg = avg + element.rating
+   
+})
+
+console.log(5);
+const rating =  avg / reviews.length
+const noOfReviews = reviews.length
+console.log(6);
+await Product.findByIdAndUpdate(req.query.productId,{reviews,rating,noOfReviews},{
+    new:true,runValidators:true,useFindAndModify:false
+})
+console.log(7);
+
+await product.save()
+;
+
+res.status(200).json({
+    success:true,
+    message:"reviewed"
+})
+
+})
