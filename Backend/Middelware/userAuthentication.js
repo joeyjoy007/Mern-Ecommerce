@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const sendCookie = require('../Utils/jwtCookie/UserCookie');
 
 exports.authToken =  catchError(async(req,res,next)=>{
- console.log(1);
+
     const token = req.cookies.jwtToken;
   
         if(!token){
@@ -24,25 +24,25 @@ exports.authToken =  catchError(async(req,res,next)=>{
 
   
         req.user = user;
-        console.log(10);
+ 
         next()
 
 })
 
 exports.authorizedRoles = (...roles)=>{
     return (req,res,next)=>{
-        console.log(6);
+  
         console.log(req.user.role);
         if(!roles.includes(req.user.role)){
 
-            console.log(7);
+           
 
        return   res.status(401).json({
         success:false,
         message:"role not decided"
     })
         }
-        console.log(8);
+        console.log(9);
         next();
      
     }

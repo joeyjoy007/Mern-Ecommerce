@@ -128,7 +128,7 @@ exports.forgotPassword = CatchErr(async(req,res,next)=>{
 
 
 exports.resetPassword = async(req,res,next)=>{
-    console.log(1);
+    
 
     try {
 
@@ -137,7 +137,7 @@ exports.resetPassword = async(req,res,next)=>{
         const user = await User.findOne({resetPasswordToken,resetPasswordExpire:{$gt:Date.now()}})
     
         if(!user){
-            console.log(2);
+         
             res.status(400).json({
                 success:false,
                 message:"user not found"
@@ -145,22 +145,21 @@ exports.resetPassword = async(req,res,next)=>{
         }
     
         if(req.body.password !== req.body.cPassword){
-            console.log(3);
+
             res.status(400).json({
                 success:false,
                 message:"passwords do not match"
             })
         }
-    console.log(4);
+  
         user.password = req.body.password;
           
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
-        console.log(5);
     
         await user.save();
         sendCookie(user,200,res)
-        console.log(6);
+
         
     } catch (error) {
         res.status(401).json({
@@ -177,9 +176,9 @@ exports.resetPassword = async(req,res,next)=>{
 
 exports.getUserDetail = CatchErr(async(req,res,next)=>{
     const user = await User.findById(req.user.id)
-console.log(1);
+
     if(user){
-        console.log(2);
+    
      return    res.status(200).json({
             success:true,
             message:"User detail is",
@@ -187,7 +186,7 @@ console.log(1);
         })
       
     }
-    console.log(3);
+
     return res.status(401).json({
         succes:false,
         message:"User is not available"
@@ -196,44 +195,79 @@ console.log(1);
 })
 
 exports.updatePassword = CatchErr(async(req,res,next)=>{
-    console.log(11);
+
 
     const user = await User.findById(req.user.id).select("+password")
-    console.log(12);
-
+  
     console.log(req.body.oldPassword);
-    console.log(13);
 
   
 
     const matchPassword = await user.comparePassword(req.body.oldPassword);
-    console.log(15)
+  
 
     if(!matchPassword){
-        console.log(16)
+  
         res.status(401).json({
             success:false,
             message:"Old password is incorrect"
         });
     };
-    console.log(17)
 
     if(req.body.newPassword !== req.body.cPassword){
-        console.log(18)
+      
         res.status(401).json({
             success:false,
             message:"Password are not equal"
         });
     };
-    console.log(19)
+
    user.password = req.body.newPassword;
-    console.log(20)
+
 
     await user.save()
-    console.log(21)
-
-    sendCookie(user,200,res)
+ 
 
 
+    res.status(200).json({
+        success:true,
+        message:"Profile updated"
+    })
+
+
+
+})
+
+
+
+//ADMIN GET ALL USERS
+
+exports.getAllUser  = CatchErr(async(req,res,next)=>{
+
+    const user = await User.find();
+
+    res.status(200).json({
+        success:true,
+        message:"Found All users",
+        user,
+    })
+})
+
+//ADMIN GETS EVERY USER DETAILS
+
+exports.getUserDetail = CatchErr(async(req,res,next)=>{
+    const user = await User.findById(req.params.id)
+
+    if(!user){
+        res.status(401).json({
+            success:false,
+            message:"User not found"
+        })
+    }
+    res.status(200).json({
+        success:true,
+        message:"User found",
+        user
+    })
 
 })
