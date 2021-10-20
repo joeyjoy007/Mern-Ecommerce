@@ -2,7 +2,8 @@ const Product = require('../modals/productModal')
 
 const catchErr = require('../Middelware/asyncMiddelware');
 const ErrorHandler = require('../Utils/errorHandler/errorHandle');
-const AppFeature = require('../Utils/Search/Search')
+const AppFeature = require('../Utils/Search/Search');
+const sendCookie = require('../Utils/jwtCookie/UserCookie');
 
 
 exports.addProduct = catchErr(async (req,res)=>{
@@ -93,3 +94,50 @@ exports.getProductDetail =catchErr( async (req,res,next)=>{
 
 })
 
+
+
+exports.productReviews = catchErr(async(req,res,next)=>{
+const {rating,comments,productId} = req.body
+    const review = {
+       user:req.user._id,
+        name:req.user._id,
+        rating :Number(rating),
+        comments:comments
+    };
+
+    const product = await Product.findById(productId)
+
+    const isReviewed =  product.reviews.find(element=>element.user.toString()===req.user._id.toString())
+
+    if(isReviewed){
+product.reviews.forEach(element=>{
+    if(product.reviews.find(element=>element.user.toString()===req.user._id.toString())){
+    element.rating = rating,
+    element.comments = comments
+    }
+    
+})
+
+    }
+    else{
+            product.reviews.push(review)
+            product.noOfReviews = product.reviews.length
+    }
+let avg = 0;
+console.log(56);
+product.rating = product.reviews.forEach((element)=>{
+    console.log(57);
+    avg += element.rating
+    console.log(58);
+}) / product.reviews.length
+console.log(59);
+
+await product.save()
+console.log(60);
+
+res.status(200).json({
+    success:true,
+    message:"reviewed"
+})
+
+})
