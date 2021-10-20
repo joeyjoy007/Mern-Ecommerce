@@ -56,14 +56,14 @@ exports.getSingleOrder = catchErr(async(req,res,next)=>{
    
 })
 
-
+//ALL OUR ORDERS
 
 exports.myOrders= catchErr(async(req,res,next)=>{
-    console.log(10);
+
 
     const order = await Order.find({user:req.user._id})
     // .populate('user','name,email')    Product Schema problem
-    console.log(1);
+   
 
 
     res.status(200).json({
@@ -71,5 +71,22 @@ exports.myOrders= catchErr(async(req,res,next)=>{
         message:"order sent",
         order
     })
-    console.log(24);
+ 
+})
+
+//ADMIN ORDER
+exports.allOrder= catchErr(async(req,res,next)=>{
+    console.log(10);
+
+    const order = await Order.find()
+
+ 
+
+
+    res.status(200).json({
+        success:true,
+        message:"order sent",
+        order
+    })
+  
 })
