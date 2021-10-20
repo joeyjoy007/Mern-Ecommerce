@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const orderSchema = new mongoose.Schema({
 
-    shipping: {
+    shippingInfo: {
         address: { type: String,
              required: true },
 
@@ -44,8 +44,9 @@ const orderSchema = new mongoose.Schema({
     },
     product:{
         type:mongoose.Schema.ObjectId,
-        ref:"product",
-        required:true
+        ref:"product"
+        // required true problem
+       
     }
     }],
     user:{
@@ -69,17 +70,17 @@ const orderSchema = new mongoose.Schema({
     },
     itemPrice:{
         type:Number,
-        default:true,
+        default:0,
            required:true
     },
    TaxPrice:{
         type:Number,
-        default:true,
+        default:0,
            required:true
     },
     shippingPrice:{
         type:Date,
-        default:true,
+        default:0,
            required:true
     },
    totalPrice:{
@@ -95,7 +96,8 @@ const orderSchema = new mongoose.Schema({
   },
   deliveredAt:{
       type:Date,
-      required:true
+      required:true,
+      default:Date.now()
   },
   createdAt:{
       type:Date,
@@ -106,6 +108,6 @@ const orderSchema = new mongoose.Schema({
 
 })
 
-const OrderModel = mongoose.model("OrderModel",orderSchema)
+const Order = mongoose.model("Order",orderSchema)
 
-module.exports = OrderModel;
+module.exports = Order;
