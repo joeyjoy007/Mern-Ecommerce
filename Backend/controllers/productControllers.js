@@ -169,18 +169,18 @@ exports.getTotalReviews = catchErr(async(req,res,next)=>{
 })
 
 exports.deleteReview = catchErr(async(req,res,next)=>{
-    console.log(1);
+  
     const product = await Product.findById(req.query.productId)
 
     if(!product){
-        console.log(2);
+       
         res.status(401).json({
             success:false,
             message:"product not found"
         })
     }
-console.log(3);
-    const reviews = product.reviews.filter(element=>element._id.toString() !== req.query.id.toString())
+
+    const reviews = product.reviews.filter(element=>element._id.toString() !== req.query.id.toString())  //saare reviw mil jaaenge 
     console.log(4);
 
     var avg = 0;
@@ -191,10 +191,10 @@ reviews.forEach((element)=>{
    
 })
 
-console.log(5);
+
 const rating =  avg / reviews.length
 const noOfReviews = reviews.length
-console.log(6);
+
 await Product.findByIdAndUpdate(req.query.productId,{reviews,rating,noOfReviews},{
     new:true,runValidators:true,useFindAndModify:false
 })
