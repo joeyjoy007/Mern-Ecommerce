@@ -32,7 +32,7 @@ exports.newOrder = catchErr(async(req,res,next)=>{
 })
 
 
-//GET DSINGLE ORDER BY ADMIN
+//GET SINGLE ORDER
 
 exports.getSingleOrder = catchErr(async(req,res,next)=>{
 
@@ -80,12 +80,17 @@ exports.allOrder= catchErr(async(req,res,next)=>{
 
     const order = await Order.find()
 
- 
+ let totalPrice =0;
+
+ order.forEach((price)=>{
+     totalPrice += price.totalPrice
+ })
 
 
     res.status(200).json({
         success:true,
         message:"order sent",
+        totalPrice,
         order
     })
   
