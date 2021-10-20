@@ -26,6 +26,11 @@ const orderSchema = new mongoose.Schema({
         }
     },
     orderItems:[{
+       product:{
+           type:mongoose.Schema.ObjectId,
+           ref:"Product",
+           required:true
+       },
     name:{
         type:String,
         required:true 
@@ -42,12 +47,7 @@ const orderSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    product:{
-        type:mongoose.Schema.ObjectId,
-        ref:"product"
-        // required true problem
-       
-    }
+  
     }],
     user:{
         type:mongoose.Schema.ObjectId,
@@ -102,6 +102,11 @@ const orderSchema = new mongoose.Schema({
   createdAt:{
       type:Date,
       default:Date.now()
+  },
+  stock:{
+      type:Number,
+      default:1,
+      required:true
   }
 
 

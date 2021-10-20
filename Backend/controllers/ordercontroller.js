@@ -1,8 +1,9 @@
 const Order  = require('../modals/orderModel')
-const product =  require('../modals/productModal')
+const Product =  require('../modals/productModal')
 
 const catchErr = require('../Middelware/asyncMiddelware');
 const ErrorHandler = require('../Utils/errorHandler/errorHandle');
+const { findById } = require('../modals/orderModel');
 
 
 exports.newOrder = catchErr(async(req,res,next)=>{
@@ -94,4 +95,66 @@ exports.allOrder= catchErr(async(req,res,next)=>{
         order
     })
   
+})
+
+
+
+
+
+exports.updateOrder = catchErr(async(req,res,next)=>{
+const order = await Order.findById(req.params.id)
+console.log(1);
+if(order.orderStatus==="Delevired"){
+    console.log(2);
+    res.status(400).json({
+        succcess:false,
+        message:"Orderd alredy Deliverd"
+    })
+}
+console.log(3);
+order.orderItems.forEach(async (order)=>{
+ await  updateStock (order.product,order.quantity)
+})
+
+order.orderStatus = req.body.Status
+
+if(req.body.Status === "Delevired"){
+    order.deliveredAt = Date.now()
+}
+
+await order.save({validateBeforeSave:false})
+res.status(200).json({
+    success:"true",
+
+});
+
+async function updateStock(id,quantity){
+
+ const product =    await Product.findById(id)
+ 
+ product.stock -= quantity;
+
+ await product.save()
+
+
+
+
+}
+})
+
+
+exports.deleteOrder = catchErr(async(req,res,next)=>{
+    const order = await Order.findById(req.params.id)
+
+    if(!order){
+        res.status(400).json({
+            success:false,
+            message:"order not found"
+        })
+    }
+
+    await order.remove()
+    res.status(200).json({
+        success:true
+    })
 })
