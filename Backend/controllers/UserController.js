@@ -239,6 +239,23 @@ exports.updatePassword = CatchErr(async(req,res,next)=>{
 })
 
 
+// UPDATE USER PROFILE
+exports.updateProfile = CatchErr(async(req,res,next)=>{
+    const updation = {
+        name:req.body.name,
+        email:req.body.email
+    }
+
+    const user = await User.findByIdAndUpdate(req.user.id,updation,{
+        new:true,
+        runValidators:true,
+        userFindAndModift:false
+        
+    })
+
+    sendCookie(user,200,res)
+})
+
 
 //ADMIN GET ALL USERS
 
@@ -270,4 +287,46 @@ exports.getUserDetail = CatchErr(async(req,res,next)=>{
         user
     })
 
+})
+
+
+//ADMIN UPDATING ROLES
+exports.updateRole = CatchErr(async(req,res,next)=>{
+    const updation = {
+        name:req.body.name,
+        email:req.body.email,
+        role:req.body.role
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id,updation,{
+        new:true,
+        runValidators:true,
+        userFindAndModift:false
+        
+    })
+
+    sendCookie(user,200,res)
+})
+
+
+// ADMIN DELETENG ROUTES
+
+exports.deleteRole = CatchErr(async(req,res,next)=>{
+  
+
+    const user = await User.findById(req.params.id)
+
+    if(!user){
+        res.status(401).json({
+            success:false,
+            message:"user not found"
+        })
+    }
+
+    await user.remove()
+
+        res.status(200).json({
+            success:true,
+            message:"Updated role"
+        })
 })

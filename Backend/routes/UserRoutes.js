@@ -1,7 +1,7 @@
 const express = require('express')
-const { registerUser, loginUser,logoutUser, forgotPassword, resetPassword, getUserDetail, updatePassword, getAllUser } = require('../controllers/UserController')
+const { registerUser, loginUser,logoutUser, forgotPassword, resetPassword, getUserDetail, updatePassword, getAllUser,updateProfile, updateRole, deleteRole } = require('../controllers/UserController')
 const router = express.Router()
-const {authToken, updateProfile, authorizedRoles} = require('../Middelware/userAuthentication')
+const {authToken, authorizedRoles} = require('../Middelware/userAuthentication')
 
 
 router.route("/register").post(registerUser)
@@ -11,6 +11,8 @@ router.route("/updatePassword").put(authToken,updatePassword)
 router.route("/updateProfile").put(authToken,updateProfile)
 router.route("/admin/getAllUser").get(authToken,authorizedRoles('admin'),getAllUser)
 router.route("/admin/getUserDetail/:id").get(authToken,authorizedRoles('admin'),getUserDetail)
+router.route("/admin/updateRole/:id").put(authToken,authorizedRoles('admin'),updateRole)
+router.route("/admin/deleteRole/:id").delete(authToken,authorizedRoles('admin'),deleteRole)
 
 
 
