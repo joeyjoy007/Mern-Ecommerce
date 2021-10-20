@@ -30,3 +30,29 @@ exports.newOrder = catchErr(async(req,res,next)=>{
     })
     console.log(1);
 })
+
+
+//GET DSINGLE ORDER BY ADMIN
+
+exports.getSingleOrder = catchErr(async(req,res,next)=>{
+
+    const order = await Order.findById(req.params.id)
+    // .populate('user','name,email')    Product Schema problem
+    console.log(1);
+
+    if(!order){
+        console.log(2);
+        res.status(401).json({
+            success:false,
+            message:"order not found"
+        })
+    }
+    console.log(23);
+
+    res.status(200).json({
+        success:true,
+        message:"order sent",
+        order
+    })
+    console.log(24);
+})
