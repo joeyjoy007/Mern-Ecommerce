@@ -23,6 +23,7 @@ exports.authToken =  catchError(async(req,res,next)=>{
 
   
         req.user = user;
+        console.log(10);
         next()
 
 })

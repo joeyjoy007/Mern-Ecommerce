@@ -194,3 +194,46 @@ console.log(1);
     })
   
 })
+
+exports.updatePassword = CatchErr(async(req,res,next)=>{
+    console.log(11);
+
+    const user = await User.findById(req.user.id).select("+password")
+    console.log(12);
+
+    console.log(req.body.oldPassword);
+    console.log(13);
+
+  
+
+    const matchPassword = await user.comparePassword(req.body.oldPassword);
+    console.log(15)
+
+    if(!matchPassword){
+        console.log(16)
+        res.status(401).json({
+            success:false,
+            message:"Old password is incorrect"
+        });
+    };
+    console.log(17)
+
+    if(req.body.newPassword !== req.body.cPassword){
+        console.log(18)
+        res.status(401).json({
+            success:false,
+            message:"Password are not equal"
+        });
+    };
+    console.log(19)
+   user.password = req.body.newPassword;
+    console.log(20)
+
+    await user.save()
+    console.log(21)
+
+    sendCookie(user,200,res)
+
+
+
+})
