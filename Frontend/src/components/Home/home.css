@@ -1,0 +1,17 @@
+.h{
+    background-image: url("./o.jpg");
+    
+    clip-path: polygon(0 1%, 100% 0, 100% 80%, 0 51%);
+        /* height: 2000px; */
+    /* contain-intrinsic-size: unset; */
+    background-size: cover;
+  
+    width: auto;
+    height: 100vh;
+    /* margin-top: -20vh; */
+}
+.fi{    margin-top: -27vmin;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
