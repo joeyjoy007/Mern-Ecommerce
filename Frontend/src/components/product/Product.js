@@ -18,7 +18,7 @@ const Product = (props) => {
 
  
     
-    <Link className="productId" to={props.product.id }>
+    <Link className="productId" to={`/product/${props.product._id}` }>
  
          
    

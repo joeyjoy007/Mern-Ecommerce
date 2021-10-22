@@ -6,19 +6,25 @@ import { getProduct } from '../../Redux Store/Action'
 import { useEffect } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
 import Loader from '../Loader/Loader'
+import { useAlert } from 'react-alert'
+import {Link} from 'react-router-dom'
 
 
 
 
 const Home = (props) => {
 
+  const alert = useAlert()
   
 
 
-const {loading,products,productsCount} = useSelector(state => state.products)
+const {error,loading,products,productsCount} = useSelector(state => state.products)
 const dispatch = useDispatch()
 
 useEffect(() => {
+  if(error){
+    return alert.error(error)
+  }
    dispatch(getProduct())
 }, [dispatch])
 
@@ -26,7 +32,9 @@ useEffect(() => {
     return (
         
       <>
-      {loading? <Loader/>:  <div>
+      {loading? <Loader/>: 
+         <div>
+      
       <Metadata title="Ecommerce"/>
       <div className="h">
 
@@ -45,6 +53,7 @@ useEffect(() => {
       <div className="col-md-4">
           
       <Product product={element}/>
+
       </div>
   )
 })}

@@ -1,5 +1,5 @@
 import {
-    ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAILURE,CLEAR
+    ALL_PRODUCT_REQUEST,ALL_PRODUCT_SUCCESS,ALL_PRODUCT_FAILURE,CLEAR, DETAIL_PRODUCT_REQUEST, DETAIL_PRODUCT_SUCCESS, DETAIL_PRODUCT_FAILURE
 } from './Constants'
 
 export const productReducer  =(state={products:[]},action)=>{
@@ -31,5 +31,27 @@ switch(action.type){
 
 
 
+}
+
+export const productDetailReducer = (state={product:{}},action)=>{
+    switch(action.type){
+        case DETAIL_PRODUCT_REQUEST:
+            return{
+                loading:true,
+                payload:state
+            }
+            case DETAIL_PRODUCT_SUCCESS:
+                return{
+                    loading:false,
+                    payload:action.payload
+                }
+                case DETAIL_PRODUCT_FAILURE:
+                    return{
+                        loading:false,
+                        payload:"Error"
+                    }
+
+                    default:return state
+    }
 }
 
