@@ -19,11 +19,9 @@ function App() {
     <Header/>
     <Switch>
     <Route path="/">
-    <Loader/>
+      <Home/>
     </Route>
-    <Route exact path="/loader">
-     
-    </Route>
+    
 
   </Switch>
   <Footer/>

@@ -9,6 +9,7 @@ import Loader from '../Loader/Loader'
 
 
 
+
 const Home = (props) => {
 
   
@@ -25,7 +26,7 @@ useEffect(() => {
     return (
         
       <>
-      {loading? "s":  <div>
+      {loading? <Loader/>:  <div>
       <Metadata title="Ecommerce"/>
       <div className="h">
 
