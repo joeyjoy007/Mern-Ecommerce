@@ -10,6 +10,7 @@ import {
   Route,
 
 } from "react-router-dom";
+import Loader from './components/Loader/Loader';
 function App() {
   return (
     <div className="App">
@@ -18,7 +19,10 @@ function App() {
     <Header/>
     <Switch>
     <Route path="/">
-      <Home/>
+    <Loader/>
+    </Route>
+    <Route exact path="/loader">
+     
     </Route>
 
   </Switch>

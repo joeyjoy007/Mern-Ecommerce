@@ -4,11 +4,11 @@ import ReactStars from 'react-rating-stars-component'
 import '../product/product.css'
 import('../../eimages/2.jpg')
 const Product = (props) => {
-    // <img style={{marginLeft:"-5vw"}} src={props.product.images[0].url} alt={props.product.name} />
+  
     const options={
         edit:false,
         activecolor:"tomato",
-        value:2.5,
+        value:`${props.product.ratings}`,
         size:window.innerWidth < 600 ?20:25,
         isHalf:true
 
@@ -22,12 +22,13 @@ const Product = (props) => {
  
          
    
-  
+    // <img style={{marginLeft:"-5vw"}} src='https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/1265384/2018/2/7/11517995803839-Highlander-White-Slim-Fit-Casual-Shirt-7581517995803601-1.jpg' style={{height:"20vh"}} alt={props.product.name} />
      <p>{props.product.name} </p>
      <div>
      <ReactStars {...options}/>
-     <span>Reviews</span>
+     <span>({props.product.noOfReviews})Reviews</span>
      <p>{props.product.price}</p>
+    
      </div>
      
     

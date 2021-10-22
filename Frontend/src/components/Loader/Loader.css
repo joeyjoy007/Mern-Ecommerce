@@ -1,0 +1,15 @@
+.loading{
+    height: 100vh;
+  display: grid;
+  place-items: center;
+    background-color: wheat;
+    max-width: 100%;
+
+}
+
+.loading > div{
+height: 10vh;
+width: 10vw;
+border-bottom: 2px solid black;
+border-radius: 50%;
+}
