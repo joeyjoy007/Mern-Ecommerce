@@ -33,22 +33,22 @@ switch(action.type){
 
 }
 
-export const productDetailReducer = (state={product:{}},action)=>{
+export const productDetailReducer = (state={products:{}},action)=>{
     switch(action.type){
         case DETAIL_PRODUCT_REQUEST:
             return{
                 loading:true,
-                payload:state
+               products:{}
             }
             case DETAIL_PRODUCT_SUCCESS:
                 return{
                     loading:false,
-                    payload:action.payload
+                products:action.payload
                 }
                 case DETAIL_PRODUCT_FAILURE:
                     return{
                         loading:false,
-                        payload:"Error"
+                        products:"Error"
                     }
 
                     default:return state

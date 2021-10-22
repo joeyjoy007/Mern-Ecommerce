@@ -3,6 +3,11 @@ import {Link} from 'react-router-dom'
 import ReactStars from 'react-rating-stars-component'
 import '../product/product.css'
 import('../../eimages/2.jpg')
+
+
+
+
+
 const Product = (props) => {
   
     const options={
@@ -13,6 +18,9 @@ const Product = (props) => {
         isHalf:true
 
     }
+
+
+
     return (
     <div >
 

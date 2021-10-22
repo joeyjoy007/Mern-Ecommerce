@@ -27,16 +27,18 @@ export const getProduct = ()=>async (dispatch)=>{
 
 
 
-export const  getProductDetail = (id) =>async(dispatch)=>{
+export const  getProductDetail = (id) => async(dispatch)=>{
     try {
 
         dispatch({type:DETAIL_PRODUCT_REQUEST})
 
-        const productDetail = await axios.get(`api/v1/getProductDetail/${id}`).catch((error)=>{
+        const {data} = await axios.get(`/api/v1/getProductDetail/${id}`).catch((error)=>{
             console.log(error)
+           
         })
+        console.log("habbhaiu",data.products)
         
-        dispatch({type:DETAIL_PRODUCT_SUCCESS,payload:productDetail})
+        dispatch({type:DETAIL_PRODUCT_SUCCESS,payload:data.products})
     } catch (error) {
 
         dispatch({type:DETAIL_PRODUCT_FAILURE,payload:"ERROR"})

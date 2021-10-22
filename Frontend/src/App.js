@@ -10,7 +10,8 @@ import {
   Route,
 
 } from "react-router-dom";
-import Loader from './components/Loader/Loader';
+
+import ProductDetail from './components/ProductDetail/ProductDetail';
 function App() {
   return (
     <div className="App">
@@ -18,8 +19,11 @@ function App() {
     <Router>
     <Header/>
     <Switch>
-    <Route path="/">
+    <Route exact path="/">
       <Home/>
+    </Route>
+    <Route exact path="/product/:id">
+     <ProductDetail/>
     </Route>
     
 
