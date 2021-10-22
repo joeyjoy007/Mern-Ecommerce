@@ -14,7 +14,7 @@ export const getProduct = ()=>async (dispatch)=>{
             console.log(err);
         })
 
-        dispatch({type:ALL_PRODUCT_SUCCESS, payload:product})
+        dispatch({type:ALL_PRODUCT_SUCCESS, payload:product.data})
       
     } catch (error) {
         dispatch({

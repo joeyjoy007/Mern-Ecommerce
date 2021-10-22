@@ -4,7 +4,7 @@ import ReactStars from 'react-rating-stars-component'
 import '../product/product.css'
 import('../../eimages/2.jpg')
 const Product = (props) => {
-
+    // <img style={{marginLeft:"-5vw"}} src={props.product.images[0].url} alt={props.product.name} />
     const options={
         edit:false,
         activecolor:"tomato",
@@ -21,7 +21,7 @@ const Product = (props) => {
     <Link className="productId" to={props.product.id }>
  
          
-    <img style={{marginLeft:"-5vw"}} src={props.product.images[0].url} alt={props.product.name} />
+   
   
      <p>{props.product.name} </p>
      <div>
