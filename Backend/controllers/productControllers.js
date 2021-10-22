@@ -24,7 +24,7 @@ const countProduct = await Product.countDocuments();
     const appfeature = new AppFeature(Product.find(),req.query).search().filter().pagination(resultPerPage)
     const products = await appfeature.query
 
-    res.status(200).json({message:"Route is Working",products})
+    res.status(200).json({message:"Route is Working",products,countProduct})
     
 })
 

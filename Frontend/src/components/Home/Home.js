@@ -2,6 +2,9 @@ import React from 'react'
 import '../Home/home.css'
 import Product from '../product/Product'
 import Metadata from '../Header/Metadata'
+import { getProduct } from '../../Redux Store/Action'
+import { useEffect } from 'react';
+import {useSelector,useDispatch} from 'react-redux'
 
 
 const Home = (props) => {
@@ -13,6 +16,13 @@ const product = {
     price:"45545",
     id:"abhishek"
 }
+
+const dispatch = useDispatch()
+
+useEffect(() => {
+   dispatch(getProduct())
+}, [dispatch])
+
 
     return (
         
