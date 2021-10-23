@@ -36,7 +36,6 @@ export const  getProductDetail = (id) => async(dispatch)=>{
             console.log(error)
            
         })
-        console.log("habbhaiu",data.products)
         
         dispatch({type:DETAIL_PRODUCT_SUCCESS,payload:data.products})
     } catch (error) {
