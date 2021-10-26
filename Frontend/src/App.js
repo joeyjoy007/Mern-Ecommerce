@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 
 import ProductDetail from './components/ProductDetail/ProductDetail';
+import Products from './components/Products/Products';
+import Search from './components/search/Search';
 function App() {
   return (
     <div className="App">
@@ -24,6 +26,12 @@ function App() {
     </Route>
     <Route exact path="/product/:id">
      <ProductDetail/>
+    </Route>
+    <Route exact path="/products">
+     <Products/>
+    </Route>
+    <Route exact path="/search">
+     <Search/>
     </Route>
     
 
