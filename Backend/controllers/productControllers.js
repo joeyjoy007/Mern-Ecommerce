@@ -1,9 +1,9 @@
 const Product = require('../modals/productModal')
 
-const catchErr = require('../Middelware/asyncMiddelware');
-const ErrorHandler = require('../Utils/errorHandler/errorHandle');
-const AppFeature = require('../Utils/Search/Search');
-const sendCookie = require('../Utils/jwtCookie/UserCookie');
+const catchErr = require('../middelware/asyncMiddelware');
+const ErrorHandler = require('../utils/errorHandler/errorHandle');
+const AppFeature = require('../utils/Search/Search');
+const sendCookie = require('../utils/jwtCookie/UserCookie');
 
 
 exports.addProduct = catchErr(async (req,res)=>{
