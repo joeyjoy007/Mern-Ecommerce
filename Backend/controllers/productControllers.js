@@ -21,7 +21,7 @@ exports.getAllProducts = catchErr(async (req,res)=>{
 
     
    
-const resultPerPage = 5;
+const resultPerPage = 8;
 const countProduct = await Product.countDocuments();
     const appfeature = new AppFeature(Product.find(),req.query).search().filter().pagination(resultPerPage)
     const products = await appfeature.query
